@@ -29,7 +29,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'cg#p$g+j9tax!#a3cup@1$8obt2_+&
 DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["www.kassandras-response.net"]
 
 
 # Application definition
@@ -62,7 +62,7 @@ ROOT_URLCONF = 'kassandras_response.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ["kassandras_response/templates/"],
+        'DIRS': [os.path.join(BASE_DIR, 'kassandras_response/templates')]
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
