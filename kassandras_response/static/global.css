@@ -1,0 +1,18 @@
+/* Color Theme Swatches in Hex */
+/* light blue #6CBAD9 */
+/* blue       #0388A6 */
+/* brown      #BFA380 */
+/* red        #BF3604 */
+/* light red  #BF6E50 */
+
+body  {padding:0px;margin:0px;}
+header {border-bottom:2px solid #0388A6}
+footer {border-top:2px solid #0388A6}
+.header_footer {background-color: #6CBAD9;color:#0388A6;width:100%;margin:0px;overflow:hidden;padding:10px;}
+.header_footer hr {color:#0388A6;background:#0388A6;height:2px;border:none;margin:0px;}
+
+.active_tab {border: 2px solid rgb(255, 99, 132);border-radius:10px 10px;}
+
+
+h3 {color:#0388A6;text-align:center;margin-top:0px;margin-bottom:10px;}
+
