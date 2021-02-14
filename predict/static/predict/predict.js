@@ -1,6 +1,21 @@
 var countries;
 var regions;
 
+Chart.plugins.register({
+    beforeDraw: function (chart, easing) {
+        if (chart.config.options.chartArea && chart.config.options.chartArea.backgroundColor) {
+            var ctx = chart.chart.ctx;
+            var chartArea = chart.chartArea;
+	    
+            ctx.save();
+            ctx.fillStyle = chart.config.options.chartArea.backgroundColor;
+            ctx.fillRect(chartArea.left, chartArea.top, chartArea.right - chartArea.left, chartArea.bottom - chartArea.top);
+            ctx.restore();
+        }
+    }
+});
+
+
 $(document).ready(function() {
     $.ajax({
 	url: "get_countries_and_regions",
@@ -25,6 +40,7 @@ $(document).ready(function() {
 	    var txt = 'Latest enforced';
 	    $('#but_hist').html(txt);
 	    check_regions(ui.item.value);
+	    change_ip_colors();
 	}
     });
 
@@ -79,10 +95,15 @@ $(document).ready(function() {
     var config = {
 	type: 'line',
 	options: {
+	    chartArea: {
+		backgroundColor: '#fcfaf2'
+	    },
 	    responsive: false,
 	    title: {
 		display: true,
-		text: "Kassandra's prediction"
+		text: "Kassandra's prediction",
+		fontSize: 24,
+		fontStyle: 'italic'
 	    },
 	    tooltips: {
 		mode: 'index',
@@ -117,7 +138,6 @@ $(document).ready(function() {
     Chart.defaults.global.defaultFontSize = 18;
     var ctx = document.getElementById('myChart').getContext('2d');
     window.myLine = new Chart(ctx, config);
-
 
 
     $("#but_predict").click(function(){
@@ -200,6 +220,11 @@ $(document).ready(function() {
 	var id = slider.attr('id');
 	slider.parent().after('<td><input type="text" id="'+id+'_val" value="'+slider.val()+'" readonly></td>');
 
+	slider.on("change",function(){
+	    $('.ips_buttons').removeClass('active_button');
+	    var txt = 'Latest enforced';
+	    $('#but_hist').html(txt);
+	});
 	
 	$('#'+id).on('input',function(){
 	    $('#'+id+'_val').val($('#'+id).val());
@@ -282,12 +307,37 @@ $(document).ready(function() {
 	}
     });
 
+
+    $("#id_model_field").on("change",function(){
+	change_ip_colors();
+    });
+
+
     
     $("#id_region").prop("disabled",true).val('');
     $("#id_country").val("Greece");
     $("#but_min").trigger("click");
+    change_ip_colors();
 });
 
+
+
+
+function change_ip_colors(){
+    // I need the geo and the model name to find the model coefficients
+    $.ajax({
+	url: "get_model_colors",
+	data: $('form').serialize(),
+	dataType: 'json',
+	async: false,
+	success: function(response){
+	    colors = response["colors"];
+	    $('#myip_table').find('tr').each(function(index){
+		$(this).find('label').parent().css('background-color',colors[index]);//.css('background','linear-gradient(0deg, rgba(58,180,75,0) 0%,'+colors[index]+' 50%, rgba(252,176,69,0) 100%)');
+	    });
+	}
+    });
+}
 
 function getRandomInt(min, max) {
     min = Math.ceil(min);

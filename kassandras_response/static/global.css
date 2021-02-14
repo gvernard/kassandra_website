@@ -5,11 +5,23 @@
 /* red        #BF3604 */
 /* light red  #BF6E50 */
 
-body  {padding:0px;margin:0px;}
+body  {padding:0px;margin:0px;background-image: url("/static/notebook_pattern.jpg");background-repeat: repeat;}
 header {border-bottom:2px solid #0388A6}
-footer {border-top:2px solid #0388A6}
+footer {border-top:2px solid #0388A6;margin-top:20px;}
 .header_footer {background-color: #6CBAD9;color:#0388A6;width:100%;margin:0px;overflow:hidden;padding:10px;}
 .header_footer hr {color:#0388A6;background:#0388A6;height:2px;border:none;margin:0px;}
+
+
+.navbar {border:2px solid #0388A6;background-color:#fcfaf2;border-radius:70px 70px;}
+
+.navbar a:link {color: #0388A6;font-size:20px;}
+.navbar a:visited {color: #0388A6;}
+.navbar a:hover {color: rgb(255, 99, 132)}
+.navbar a:active {color: rgb(255, 99, 132)}
+
+.navbar .navbar-brand {font-weight:bold;}
+
+
 
 .active_tab {border: 2px solid rgb(255, 99, 132);border-radius:10px 10px;}
 

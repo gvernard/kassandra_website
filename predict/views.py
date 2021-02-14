@@ -11,6 +11,7 @@ from .forms import IPForm,PredictorForm
 
 from .kassandra_predictor.kassandra_predictor import make_prediction
 from .kassandra_predictor.kassandra_predictor import get_latest_hist
+from .kassandra_predictor.kassandra_predictor import match_model_coeffs_to_colors
 
 
 IP_MAX_VALUES = {
@@ -36,9 +37,24 @@ class BaseIPSFormSet(BaseFormSet):
         kwargs['mymin'] = 0
         kwargs['mymax'] = IP_MAX_VALUES[MY_IPS[index]]
         return kwargs
+
+
+def get_model_colors(request):
+    country = str(request.GET.get('country',None))
+    region  = str(request.GET.get('region',None))
+    if region == 'None':
+        geo = country + '__'
+    else:
+        geo = country + '__' + region
+    model  = str(request.GET.get('model_field',None))    
+    colors = match_model_coeffs_to_colors(geo,model)
+    response = {
+        "geo": geo,
+        "colors": colors
+    }
+    return JsonResponse(response)
+
     
-
-
 
 def get_countries_and_regions(request):
     this_path = os.path.dirname(__file__)
@@ -109,12 +125,13 @@ def test_predictor(request):
     rate  = float(request.GET.get('rate',None))
     start_date = str(request.GET.get('start_date'))
     end_date = str(request.GET.get('end_date'))
+    model  = str(request.GET.get('model_field',None))
 
     IP_vector = []
     for i in range(0,len(MY_IPS)):
         IP_vector.append(request.GET.get('form-'+str(i)+'-ip'))
         
-    dates,newCases,quant25,quant75 = make_prediction(geo,rate,K,start_date,end_date,IP_vector)
+    dates,newCases,quant25,quant75 = make_prediction(geo,rate,K,start_date,end_date,IP_vector,model)
     data_newCases = []
     data_quant25  = []
     data_quant75  = []

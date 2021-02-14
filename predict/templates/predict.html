@@ -20,43 +20,41 @@ Kassandra Predictor
 {% endblock %}
 
 {% block content %}
-<table>
-  <tr>
-    <!-- <td> -->
-    <!--   <h1>Hello, World!</h1> -->
-    <!--   <img id="img_kas" src="{% static 'predict/image.jpeg' %}" alt="My image"> -->
-    <!-- </td> -->
-
-    <td>
-      <form form-url="{% url 'test_predictor' %}" method="post">
-	{% csrf_token %}
+<form form-url="{% url 'test_predictor' %}" method="post">
+  {% csrf_token %}
+  <table>
+    <tr>
+      <td>
 	<h3>Predictor</h3>
-	<table id="first_form">
-	  {{ form1.as_table }}
-	</table>
-	<div class='ips_div'>
-	<h3>Intervention Plans</h3>
-	<table id="table_buttons">
-	  <tr>
-	    <td><button type="button" class="my_button ips_buttons" id="but_maxout">Max all</button></td>
-	    <td><button type="button" class="my_button ips_buttons" id="but_min">None</button></td>
-	    <td><button type="button" class="my_button ips_buttons" id="but_random">Random</button></td>
-	    <td><button type="button" class="my_button ips_buttons" id="but_hist">Latest enforced</button></td>
-	  </tr>
-	</table>
-	<table id="myip_table">
-	  {{ formset.as_table }}
-	</table>
+	<div class="pred_div">
+	  <table id="first_form">
+	    {{ form1.as_table }}
+	  </table>
 	</div>
-	<button type="button" class="my_button" id="but_predict">Predict</button>
-      </form>
-
-    <td>
-      <canvas id="myChart" width="1000px" height="600px"></canvas>
-    </td>
-
-  </tr>
-</table>
+      </td>
+      <td>
+	<canvas id="myChart" width="1000px" height="600px"></canvas>
+      </td>
+      <td>
+	<div class="ips_div">
+	  <h3>Intervention Plans</h3>
+	  <table id="table_buttons">
+	    <tr>
+	      <td><button type="button" class="my_button ips_buttons" id="but_maxout">Max all</button></td>
+	      <td><button type="button" class="my_button ips_buttons" id="but_min">None</button></td>
+	      <td><button type="button" class="my_button ips_buttons" id="but_random">Random</button></td>
+	    </tr>
+	    <tr><td colspan="3"><button type="button" class="my_button ips_buttons" id="but_hist">Latest enforced</button></td></tr>
+	  </table>
+	  <table id="myip_table">
+	    {{ formset.as_table }}
+	  </table>
+	</div>
+      </td>
+    </tr>
+  </table>
+  <button type="button" class="my_button" id="but_predict">Predict</button>
+</form>
 {% endblock %}
 
 

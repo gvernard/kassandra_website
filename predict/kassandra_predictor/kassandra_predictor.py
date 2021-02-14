@@ -2,7 +2,8 @@ import sys
 import os
 import numpy as np
 import pandas as pd
-
+import matplotlib
+import matplotlib.cm
 
 MY_IPS = ['C1_School closing',
           'C2_Workplace closing',
@@ -18,10 +19,20 @@ MY_IPS = ['C1_School closing',
           'H6_Facial Coverings']
 
 
+def match_model_coeffs_to_colors(geo,model_file):
+    this_path = os.path.dirname(__file__)
+    model_df = pd.read_csv(this_path+'/models/'+model_file,encoding="ISO-8859-1",dtype={"Name": str},error_bad_lines=False)
+    coeffs = abs( model_df[model_df['GeoID'] == geo].drop(columns=['GeoID']).values )
+    means = np.mean(coeffs,axis=0)
+    mean_max = means.max()
+    cmap = matplotlib.cm.get_cmap('Greens')
+    colors = []
+    for i in range(0,len(means)):
+        colors.append( matplotlib.colors.to_hex(cmap(means[i]/(1.2*mean_max))) )
+    return colors
 
-def make_prediction(geo,rate,K,start_date,end_date,IPS_vector):
-    model_file = 'multi_model_22_12_2020.csv'
 
+def make_prediction(geo,rate,K,start_date,end_date,IPS_vector,model_file):
     this_path = os.path.dirname(__file__)
     kas_pred = KassandraPredictor(this_path+"/",model_file,geo,rate,K)
 
