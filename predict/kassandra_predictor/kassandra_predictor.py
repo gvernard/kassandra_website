@@ -42,6 +42,9 @@ def make_prediction(geo,rate,K,start_date,end_date,IPS_vector,model_file):
     newCases = forecast_df["PredictedDailyNewCases"].tolist()
     quant25  = forecast_df["PredictedDailyQuantile_25"].tolist()
     quant75  = forecast_df["PredictedDailyQuantile_75"].tolist()
+    newCases = [round(num) for num in newCases]
+    quant25  = [round(num) for num in quant25]
+    quant75  = [round(num) for num in quant75]
     
     return dates,newCases,quant25,quant75
 
