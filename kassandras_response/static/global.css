@@ -5,7 +5,7 @@
 /* red        #BF3604 */
 /* light red  #BF6E50 */
 
-body  {padding:0px;margin:0px;background-image: url("/static/notebook_pattern.jpg");background-repeat: repeat;}
+body  {padding:0px;margin:0px;}
 header {border-bottom:2px solid #0388A6}
 footer {border-top:2px solid #0388A6;margin-top:20px;}
 .header_footer {background-color: #6CBAD9;color:#0388A6;width:100%;margin:0px;overflow:hidden;padding:10px;}
