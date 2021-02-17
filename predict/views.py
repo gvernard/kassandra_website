@@ -54,7 +54,6 @@ def get_model_colors(request):
     }
     return JsonResponse(response)
 
-    
 
 def get_countries_and_regions(request):
     this_path = os.path.dirname(__file__)

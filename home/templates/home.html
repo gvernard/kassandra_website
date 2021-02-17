@@ -14,7 +14,6 @@ Kassandra's Home
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.7/raphael.min.js" charset="utf-8"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-mapael/2.1.0/js/jquery.mapael.min.js" charset="utf-8"></script>
 <script type="text/javascript" src="https://rawgit.com/neveldo/mapael-maps/master/world/world_countries.js" charset="utf-8"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-mousewheel/3.1.13/jquery.mousewheel.min.js" charset="utf-8"></script>
 <script type="text/javascript" src="{% static 'home/home.js' %}"></script>
 {% endblock %}
 
@@ -23,8 +22,10 @@ Kassandra's Home
 
 <div class="mapcontainer" align="center">
   <div class="map">Alternative content</div>
+  <div class="areaLegend"></div>
 </div>
 
+<button type="button" id="dum">update</button>
 <div class="welcome">
   <p>
     This website has been developed as a comprehensive interface to a <span class="myemph">predictive</span> and <span class="myemph">prescriptive</span> model for dealing with the health and economic impact of Covid19.
