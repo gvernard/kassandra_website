@@ -9,17 +9,35 @@ Kassandra's Home
 <link rel="stylesheet" type="text/css" href="{% static 'home/home.css' %}">
 {% endblock %}
 
+{% block javascript %}
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-mousewheel/3.1.13/jquery.mousewheel.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.7/raphael.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-mapael/2.1.0/js/jquery.mapael.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="https://rawgit.com/neveldo/mapael-maps/master/world/world_countries.js" charset="utf-8"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-mousewheel/3.1.13/jquery.mousewheel.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="{% static 'home/home.js' %}"></script>
+{% endblock %}
+
 {% block content %}
+<h3>Kassandra's forecast for Covid19</h3>
+
+<div class="mapcontainer" align="center">
+  <div class="map">Alternative content</div>
+</div>
+
 <div class="welcome">
-  <h3>Kassandra's prophecy for Covid19</h3>
   <p>
-    This is the website where wadsfa asdf asdfas dfas fads fad fs
+    This website has been developed as a comprehensive interface to a <span class="myemph">predictive</span> and <span class="myemph">prescriptive</span> model for dealing with the health and economic impact of Covid19.
+    The <a href="https://covidtracker.bsg.ox.ac.uk/" target="_blank">OxfordCGRT</a> data are fed into the model (or any other similar dataset), which can then work on a per country/region basis for arbitrary dates in the past and/or the future.
+    This allows for comprehensive testing and optimization of different non-pharmaceutical Intervention Plan policies.
+    There are two technical reports describing in detail the aspects of the <a href="{% static 'home/kassandras_predictor.pdf' %}" target="_blank">predictive</a> and <a href="{% static 'home/kassandras_prescriptor.pdf' %}" target="_blank">prescriptive</a> modes of the model, in short:
     <dl>
-      <dt>Predict</dt>
+      <dt>Predictor</dt>
       <dd>adsfasdf asfas dfa dfa</dd>
-      <dt>Prescribe</dt>
+      <dt>Prescriptor</dt>
       <dd>adsfasdf asfas dfa dfa</dd>
     </dl>
+    We participated in Xprize's 2020-2021 <a href="https://www.xprize.org/challenge/pandemicresponse" target="_blank">Pandemic Response Challenge</a>, where we placed in the top 20% of 50 teams from across the world.
   </p>
 </div>
 {% endblock %}
