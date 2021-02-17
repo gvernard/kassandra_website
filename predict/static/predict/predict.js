@@ -360,6 +360,7 @@ function check_regions(country){
 		$('.ips_buttons').removeClass('active_button');
 		var txt = 'Latest enforced';
 		$('#but_hist').html(txt);
+		change_ip_colors();
 	    }
 	});
     }

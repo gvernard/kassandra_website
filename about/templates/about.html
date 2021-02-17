@@ -2,11 +2,48 @@
 {% load static %}
 
 {% block title %}
-Kassandra About
+About the team
 {% endblock %}
 
+
+{% block stylesheet %}
+<link rel="stylesheet" type="text/css" href="{% static 'about/about.css' %}">
+{% endblock %}
+
+
 {% block content %}
-About under construction
+<table class="main">
+  <tr>
+    <td >
+      <div id="giannis">
+	<img src="{% static 'about/giannis.jpg' %}" height="200" width="200" alt="">
+	<p>
+	  <span class="mybold">Yannis Pantazis</span>, PhD, is an Assistant Researcher at the Institute of Applied and Computational Mathematics of the Foundation of Research and Technology-Hellas, Greece. He received his BSc, MSc and PhD in Computer Science from the University of Crete in 2004, 2006 and 2010, respectively. From 2010 to 2015, he was a Postdoctoral Research Associate at the University of Massachusetts, Amherst working on Applied Mathematics and particularly on uncertainty quantification of stochastic processes with applications in biochemical reaction networks, rare events and molecular dynamics. From mid 2015 to 2017, he developed, as a Postdoctoral Research Associate at the University of Crete, learning algorithms for sparse dynamical system inference from single-cell cytometry data. His research interests include Machine Learning, Signal Processing, Bioinformatics, Stochastic Processes, Dynamical Systems, Uncertainty Quantification and Applied Probability Theory. He is author of 45 referred scientific publications that has been presented in various journals, conferences and workshops.  He has a total number of 660 citations and an h-index of 15 (google scholar). In 2015-2016, he received the 1st honorable mention (3rd place) on DARPA’s Forecasting Chikungunya Outbreak Competition and the 1st place in CTTSO's Challenge on “Algorithmic Identification of Material Mixtures from Raman Spectra”. 
+	</p>
+      </div>
+    </td>
+    <td>
+      <div id="giorgos">
+	<img src="{% static 'about/giorgos.jpg' %}" height="200" width="200" alt="">
+	<p>
+	  <span class="mybold">Giorgos Vernardos</span>, PhD, is an Assistant Researcher at the Institute of Applied and Computational Mathematics of the Foundation of Research and Technology-Hellas, Greece. He received his BSc, MSc and PhD in Computer Science from the University of Crete in 2004, 2006 and 2010, respectively. From 2010 to 2015, he was a Postdoctoral Research Associate at the University of Massachusetts, Amherst working on Applied Mathematics and particularly on uncertainty quantification of stochastic processes with applications in biochemical reaction networks, rare events and molecular dynamics. From mid 2015 to 2017, he developed, as a Postdoctoral Research Associate at the University of Crete, learning algorithms for sparse dynamical system inference from single-cell cytometry data. His research interests include Machine Learning, Signal Processing, Bioinformatics, Stochastic Processes, Dynamical Systems, Uncertainty Quantification and Applied Probability Theory. He is author of 45 referred scientific publications that has been presented in various journals, conferences and workshops.  He has a total number of 660 citations and an h-index of 15 (google scholar). In 2015-2016, he received the 1st honorable mention (3rd place) on DARPA’s Forecasting Chikungunya Outbreak Competition and the 1st place in CTTSO's Challenge on “Algorithmic Identification of Material Mixtures from Raman Spectra”. 
+	</p>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2">
+      <div id="kassandra">
+	<img src="{% static 'about/kassandra.jpeg' %}" width="150" alt="">
+	<p>
+	  Kassandra (Κασσάνδρα) was a character from Greek mythology, gifted by Apollo with the ability to see the future. The following is taken from the corresponding <a href="https://en.wikipedia.org/wiki/Cassandra">wikipedia article</a>:<br><br>
+	  <span class="myitalic">"Cassandra was a Trojan princess, younger sister of Hector, hero of the Greco-Trojan war. She was admired by the god Apollo, who sought to win her with the gift to see the future. According to Aeschylus, she promised him her favors, but after receiving the gift, she went back on her word and refused the god. The enraged Apollo could not revoke a divine power, so he added to it the curse that although she would see the future, nobody would believe her prophecies. In other sources, such as Hyginus and Pseudo-Apollodorus, Cassandra broke no promise; the powers were given to her as an enticement. When these failed to make her love him, Apollo cursed Cassandra to always be disbelieved, in spite of the truth of her words."</span><br><br>
+	  *Cassandra in front of the burning city of Troy, by Evelyn De Morgan (1898,London)
+	</p>
+      </div>
+    </td>
+  </tr>
+</table>
 {% endblock %}
 
 {% block year %}
