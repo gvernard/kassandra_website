@@ -54,7 +54,7 @@ def get_latest_hist(geo):
     hist_df = pd.read_csv(this_path+'/data/latest_df.csv',parse_dates=['Date'],encoding="ISO-8859-1",dtype={"GeoID": str},error_bad_lines=False)
     hist_df = hist_df[hist_df.GeoID == geo]
     IPS_vector = hist_df[MY_IPS].loc[hist_df.Date.idxmax()].values.tolist()
-    latest_hist_date = hist_df.loc[hist_df.Date.idxmax()].at['Date'].date()
+    latest_hist_date = hist_df.loc[hist_df.Date.idxmax()].at['Date'].date().strftime('%Y-%m-%d')
     return latest_hist_date,IPS_vector
     
 

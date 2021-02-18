@@ -30,13 +30,53 @@ IP_MAX_VALUES = {
 }
 MY_IPS = list(IP_MAX_VALUES.keys())
 
+MY_HIST_IPS = [None]*len(MY_IPS)
+
 class BaseIPSFormSet(BaseFormSet):
     def get_form_kwargs(self, index):
         kwargs = super().get_form_kwargs(index)
         kwargs['label'] = MY_IPS[index]
+        kwargs['myval'] = MY_HIST_IPS[index]
         kwargs['mymin'] = 0
         kwargs['mymax'] = IP_MAX_VALUES[MY_IPS[index]]
         return kwargs
+
+# Create your views here.
+def predict(request):
+    init_dict = {
+        "country": "Greece",
+        "rate": 0.03,
+        "start_date": datetime.date.today(),
+        "end_date": datetime.date.today()+datetime.timedelta(days=30),
+        "model_field": "multi_model_22_12_2020.csv",
+    }
+    form1 = PredictorForm(initial=init_dict)
+    latest_date,latest_ips = get_latest_hist(init_dict["country"]+"__")
+    for i in range(0,len(latest_ips)):
+        MY_HIST_IPS[i] = latest_ips[i]
+    formset = formset_factory(IPForm,extra=len(MY_IPS),formset=BaseIPSFormSet)
+    year = datetime.datetime.now().year
+    return render(request,"predict.html",{'form1':form1,'formset':formset,'year':year,'latest_ips_date':latest_date,'my_latest':MY_HIST_IPS})
+
+
+def get_latest_ips(request):
+    country = str(request.GET.get('country',None))
+    region  = str(request.GET.get('region',None))
+    if region == 'None':
+        geo = country + '__'
+    else:
+        geo = country + '__' + region
+    latest_date,latest_ips = get_latest_hist(geo)
+    response = {
+        "geo": geo,
+        "date": latest_date,
+        "ips": latest_ips
+    }
+    return JsonResponse(response)
+
+
+
+
 
 
 def get_model_colors(request):
@@ -82,34 +122,6 @@ def get_countries_and_regions(request):
     response = { "countries": countries, "regions": regions }
     return JsonResponse(response)
 
-    
-# Create your views here.
-def predict(request):
-    form1 = PredictorForm()
-    formset = formset_factory(IPForm,extra=len(MY_IPS),formset=BaseIPSFormSet)
-    #formset = IPSformset(form_kwargs={'label':'kkk'})
-    #formset = IPForm()
-    year = datetime.datetime.now().year
-    return render(request,"predict.html",{'form1':form1,'formset':formset,'year':year})
-
-
-def get_latest_ips(request):
-    country = str(request.GET.get('country',None))
-    region  = str(request.GET.get('region',None))
-    if region == 'None':
-        geo = country + '__'
-    else:
-        geo = country + '__' + region
-    latest_date,latest_ips = get_latest_hist(geo)
-    #latest_date = '2020-12-11'
-    #latest_ips = [0]*len(MY_IPS)
-    response = {
-        "geo": geo,
-        "date": latest_date,
-        "ips": latest_ips
-    }
-    return JsonResponse(response)
-
 
 
 def test_predictor(request):
@@ -128,7 +140,7 @@ def test_predictor(request):
 
     IP_vector = []
     for i in range(0,len(MY_IPS)):
-        IP_vector.append(request.GET.get('form-'+str(i)+'-ip'))
+        IP_vector.append(request.GET.get('form-'+str(i)+'-ip_text'))
         
     dates,newCases,quant25,quant75 = make_prediction(geo,rate,K,start_date,end_date,IP_vector,model)
     data_newCases = []

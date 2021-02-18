@@ -28,7 +28,6 @@ $(document).ready(function() {
 
     
     $('.datepicker').datepicker({dateFormat:'yy-mm-dd'});
-    $('#id_rate').val(0.03);
 
     // Properties for the country field
     $("#id_country").autocomplete({
@@ -214,31 +213,38 @@ $(document).ready(function() {
 	});
 
     });
-			    
+
+
+    
+    $("#myip_table tr:nth-child(odd)").append(function(){
+	return $(this).next().remove().contents();
+    });
     $('#myip_table').find('tr').each(function(){
         var slider = $(this).find('td').eq(0).find('input');
 	var id = slider.attr('id');
-	slider.parent().after('<td><input type="text" id="'+id+'_val" value="'+slider.val()+'" readonly></td>');
 
 	slider.on("change",function(){
 	    $('.ips_buttons').removeClass('active_button');
-	    var txt = 'Latest enforced';
-	    $('#but_hist').html(txt);
+	    $('#but_hist').html('Latest enforced');
+	    $(this).parent().parent().find('td').eq(1).find('input').val($(this).val());
 	});
 	
 	$('#'+id).on('input',function(){
-	    $('#'+id+'_val').val($('#'+id).val());
+	    $(this).parent().parent().find('td').eq(1).find('input').val($(this).val());
 	});
     });
+    $(".ips_div").fadeIn();
 
 
+
+    
+    
     $("#but_maxout").click(function(){
 	$('#myip_table').find('tr').each(function(){
             var slider = $(this).find('td').eq(0).find('input');
-	    var id = slider.attr('id');
 	    var max = slider.attr('max');
 	    slider.val(max);
-	    $('#'+id+'_val').val(max);
+	    slider.parent().parent().find('td').eq(1).find('input').val(max);
 	});
 	$('.ips_buttons').removeClass('active_button');
 	$(this).addClass('active_button');
@@ -247,10 +253,9 @@ $(document).ready(function() {
     $("#but_min").click(function(){
 	$('#myip_table').find('tr').each(function(){
             var slider = $(this).find('td').eq(0).find('input');
-	    var id = slider.attr('id');
 	    var min = slider.attr('min');
 	    slider.val(min);
-	    $('#'+id+'_val').val(min);
+	    slider.parent().parent().find('td').eq(1).find('input').val(min);
 	});
 	$('.ips_buttons').removeClass('active_button');
 	$(this).addClass('active_button');
@@ -260,12 +265,11 @@ $(document).ready(function() {
     $("#but_random").click(function(){
 	$('#myip_table').find('tr').each(function(){
             var slider = $(this).find('td').eq(0).find('input');
-	    var id = slider.attr('id');
 	    var min = slider.attr('min');
 	    var max = slider.attr('max');
 	    var myval = getRandomInt(min,max);
 	    slider.val(myval);
-	    $('#'+id+'_val').val(myval);
+	    slider.parent().parent().find('td').eq(1).find('input').val(myval);
 	});
 	$('.ips_buttons').removeClass('active_button');
 	$(this).addClass('active_button');
@@ -290,14 +294,13 @@ $(document).ready(function() {
 		    var hist_ips = response["ips"];
 		    $('#myip_table').find('tr').each(function(index){
 			var slider = $(this).find('td').eq(0).find('input');
-			var id = slider.attr('id');
 			var myval = hist_ips[index]
 			slider.val(myval);
-			$('#'+id+'_val').val(myval);
+			slider.parent().parent().find('td').eq(1).find('input').val(myval);
 		    });
 		    
-		    var txt = 'Latest enforced ('+response["date"]+')';
-		    but.html(txt);
+		    but.html('Latest enforced ('+response["date"]+')');
+
 		}
 	    });
 
@@ -308,6 +311,11 @@ $(document).ready(function() {
     });
 
 
+
+
+
+    
+
     $("#id_model_field").on("change",function(){
 	change_ip_colors();
     });
@@ -315,9 +323,9 @@ $(document).ready(function() {
 
     
     $("#id_region").prop("disabled",true).val('');
-    $("#id_country").val("Greece");
-    $("#but_min").trigger("click");
+    $("#but_hist").addClass("active_button");
     change_ip_colors();
+    $("#but_predict").trigger("click");    
 });
 
 

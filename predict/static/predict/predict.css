@@ -7,11 +7,11 @@
 .pred_div table th {text-align:right;font-weight:normal;}
 
 
-.ips_div  {border: 2px dashed #6CBAD9;border-radius:15px;padding:15px;;margin-top:20px;}
+.ips_div  {border: 2px dashed #6CBAD9;border-radius:15px;padding:15px;;margin-top:20px;display:none}
 #table_buttons {margin: 20px auto 20px auto;}
 #but_hist      {display:block;margin:0 auto;}
 #myip_table th {text-align:right;font-weight:normal;}
-#myip_table input[type=range] {width:150px;margin-left:30px;}
+#myip_table input[type=range] {width:150px;margin-left:5px;}
 #myip_table input[type=text] {width:30px;margin-left:5px;text-align:center;}
 
 
