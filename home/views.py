@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import JsonResponse
 import datetime
 import numpy as np
-
+from .forms import ModelForm
 
 alpha2_codes = [
     {'code':'AF','name': 'Afghanistan'},
@@ -263,6 +263,7 @@ def get_global_new_cases(request):
     return JsonResponse(newcases)
 
 def home(request):
+    myform = ModelForm()
     year = datetime.datetime.now().year
-    return render(request,"home.html",{'year':year})
+    return render(request,"home.html",{'year':year,'myform':myform})
 
