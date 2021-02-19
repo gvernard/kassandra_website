@@ -20,6 +20,7 @@ Kassandra Predictor
 {% endblock %}
 
 {% block content %}
+{{ dum }}
 <form form-url="{% url 'test_predictor' %}" method="post">
   {% csrf_token %}
   <table>

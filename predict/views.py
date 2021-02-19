@@ -44,11 +44,11 @@ class BaseIPSFormSet(BaseFormSet):
 # Create your views here.
 def predict(request):
     init_dict = {
-        "country": "Greece",
-        "rate": 0.03,
-        "start_date": datetime.date.today(),
-        "end_date": datetime.date.today()+datetime.timedelta(days=30),
-        "model_field": "multi_model_22_12_2020.csv",
+        "country": request.GET.get("country","Greece"),
+        "rate": request.GET.get("rate",0.03),
+        "start_date": request.GET.get("start_date",datetime.date.today()),
+        "end_date": request.GET.get("end_date",datetime.date.today()+datetime.timedelta(days=30)),
+        "model_field": request.GET.get("model_field","multi_model_22_12_2020.csv"),
     }
     form1 = PredictorForm(initial=init_dict)
     latest_date,latest_ips = get_latest_hist(init_dict["country"]+"__")
