@@ -86,9 +86,12 @@ $(document).ready(function() {
     
     
 
-    mycolor  = 'rgb(255, 99, 132)'
-    mycolor2 = 'rgba(255, 99, 132, 0.3)'
-    mycolor3 = 'rgba(255, 99, 132, 0.7)'
+    //mycolor  = 'rgb(255, 99, 132)'
+    //mycolor2 = 'rgba(255, 99, 132, 0.3)'
+    //mycolor3 = 'rgba(255, 99, 132, 0.7)'
+    mycolor  = 'rgb(255, 34, 137)'
+    mycolor2 = 'rgba(255, 34, 137, 0.3)'
+    mycolor3 = 'rgba(255, 34, 137, 0.7)'
 
     //mycolor = 'rgb(54, 162, 235)'
     var config = {

@@ -1,12 +1,20 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block stylesheet %}
+<link rel="stylesheet" type="text/css" href="{% static 'prescribe/prescribe.css' %}">
+{% endblock %}
+
 {% block title %}
 Kassandra Home
 {% endblock %}
 
 {% block content %}
-Prescribe under construction
+<div class="main">
+  <p>
+    Prescriptor interface under construction
+  </p>
+</div>
 {% endblock %}
 
 {% block year %}

@@ -1,7 +1,9 @@
+import os
 from django.shortcuts import render
 from django.http import JsonResponse
 import datetime
 import json
+import pandas as pd
 from django.utils.safestring import SafeString
 import numpy as np
 from .forms import ModelForm
@@ -34,12 +36,12 @@ alpha2_codes = [
     {'code':'BM','name': 'Bermuda'},
     {'code':'BT','name': 'Bhutan'},
     {'code':'BO','name': 'Bolivia'},
-    {'code':'BA','name': 'Bosnia And Herzegovina'},
+    {'code':'BA','name': 'Bosnia and Herzegovina'},
     {'code':'BW','name': 'Botswana'},
     {'code':'BV','name': 'Bouvet Island'},
     {'code':'BR','name': 'Brazil'},
     {'code':'IO','name': 'British Indian Ocean Territory'},
-    {'code':'BN','name': 'Brunei Darussalam'},
+    {'code':'BN','name': 'Brunei'},
     {'code':'BG','name': 'Bulgaria'},
     {'code':'BF','name': 'Burkina Faso'},
     {'code':'BI','name': 'Burundi'},
@@ -57,14 +59,14 @@ alpha2_codes = [
     {'code':'CO','name': 'Colombia'},
     {'code':'KM','name': 'Comoros'},
     {'code':'CG','name': 'Congo'},
-    {'code':'CD','name': 'Congo}, Democratic Republic'},
     {'code':'CK','name': 'Cook Islands'},
     {'code':'CR','name': 'Costa Rica'},
-    {'code':'CI','name': 'Cote D\'Ivoire'},
+    {'code':'CI','name': 'Cote d\'Ivoire'},
     {'code':'HR','name': 'Croatia'},
     {'code':'CU','name': 'Cuba'},
     {'code':'CY','name': 'Cyprus'},
     {'code':'CZ','name': 'Czech Republic'},
+    {'code':'CD','name': 'Democratic Republic of Congo'},
     {'code':'DK','name': 'Denmark'},
     {'code':'DJ','name': 'Djibouti'},
     {'code':'DM','name': 'Dominica'},
@@ -75,9 +77,10 @@ alpha2_codes = [
     {'code':'GQ','name': 'Equatorial Guinea'},
     {'code':'ER','name': 'Eritrea'},
     {'code':'EE','name': 'Estonia'},
+    {'code':'SZ','name': 'Eswatini'},
     {'code':'ET','name': 'Ethiopia'},
     {'code':'FK','name': 'Falkland Islands (Malvinas)'},
-    {'code':'FO','name': 'Faroe Islands'},
+    {'code':'FO','name': 'Faeroe Islands'},
     {'code':'FJ','name': 'Fiji'},
     {'code':'FI','name': 'Finland'},
     {'code':'FR','name': 'France'},
@@ -109,7 +112,7 @@ alpha2_codes = [
     {'code':'IS','name': 'Iceland'},
     {'code':'IN','name': 'India'},
     {'code':'ID','name': 'Indonesia'},
-    {'code':'IR','name': 'Iran}, Islamic Republic Of'},
+    {'code':'IR','name': 'Iran'},
     {'code':'IQ','name': 'Iraq'},
     {'code':'IE','name': 'Ireland'},
     {'code':'IM','name': 'Isle Of Man'},
@@ -124,13 +127,13 @@ alpha2_codes = [
     {'code':'KI','name': 'Kiribati'},
     {'code':'KR','name': 'Korea'},
     {'code':'KW','name': 'Kuwait'},
-    {'code':'KG','name': 'Kyrgyzstan'},
-    {'code':'LA','name': 'Lao People\'s Democratic Republic'},
+    {'code':'KG','name': 'Kyrgyz Republic'},
+    {'code':'LA','name': 'Laos'},
     {'code':'LV','name': 'Latvia'},
     {'code':'LB','name': 'Lebanon'},
     {'code':'LS','name': 'Lesotho'},
     {'code':'LR','name': 'Liberia'},
-    {'code':'LY','name': 'Libyan Arab Jamahiriya'},
+    {'code':'LY','name': 'Libya'},
     {'code':'LI','name': 'Liechtenstein'},
     {'code':'LT','name': 'Lithuania'},
     {'code':'LU','name': 'Luxembourg'},
@@ -174,7 +177,7 @@ alpha2_codes = [
     {'code':'OM','name': 'Oman'},
     {'code':'PK','name': 'Pakistan'},
     {'code':'PW','name': 'Palau'},
-    {'code':'PS','name': 'Palestinian Territory}, Occupied'},
+    {'code':'PS','name': 'Palestine'},
     {'code':'PA','name': 'Panama'},
     {'code':'PG','name': 'Papua New Guinea'},
     {'code':'PY','name': 'Paraguay'},
@@ -187,7 +190,7 @@ alpha2_codes = [
     {'code':'QA','name': 'Qatar'},
     {'code':'RE','name': 'Reunion'},
     {'code':'RO','name': 'Romania'},
-    {'code':'RU','name': 'Russian Federation'},
+    {'code':'RU','name': 'Russia'},
     {'code':'RW','name': 'Rwanda'},
     {'code':'BL','name': 'Saint Barthelemy'},
     {'code':'SH','name': 'Saint Helena'},
@@ -205,7 +208,7 @@ alpha2_codes = [
     {'code':'SC','name': 'Seychelles'},
     {'code':'SL','name': 'Sierra Leone'},
     {'code':'SG','name': 'Singapore'},
-    {'code':'SK','name': 'Slovakia'},
+    {'code':'SK','name': 'Slovak Republic'},
     {'code':'SI','name': 'Slovenia'},
     {'code':'SB','name': 'Solomon Islands'},
     {'code':'SO','name': 'Somalia'},
@@ -216,7 +219,6 @@ alpha2_codes = [
     {'code':'SD','name': 'Sudan'},
     {'code':'SR','name': 'Suriname'},
     {'code':'SJ','name': 'Svalbard And Jan Mayen'},
-    {'code':'SZ','name': 'Swaziland'},
     {'code':'SE','name': 'Sweden'},
     {'code':'CH','name': 'Switzerland'},
     {'code':'SY','name': 'Syrian Arab Republic'},
@@ -240,13 +242,13 @@ alpha2_codes = [
     {'code':'GB','name': 'United Kingdom'},
     {'code':'US','name': 'United States'},
     {'code':'UM','name': 'United States Outlying Islands'},
+    {'code':'VI','name': 'United States Virgin Islands'},
     {'code':'UY','name': 'Uruguay'},
     {'code':'UZ','name': 'Uzbekistan'},
     {'code':'VU','name': 'Vanuatu'},
     {'code':'VE','name': 'Venezuela'},
     {'code':'VN','name': 'Vietnam'},
     {'code':'VG','name': 'Virgin Islands}, British'},
-    {'code':'VI','name': 'Virgin Islands}, U.S.'},
     {'code':'WF','name': 'Wallis And Futuna'},
     {'code':'EH','name': 'Western Sahara'},
     {'code':'YE','name': 'Yemen'},
@@ -255,21 +257,38 @@ alpha2_codes = [
 ]
 
 
-
-
+ 
+    
 def get_global_new_cases(request):
-    newcases = {}
-    numbers = np.random.randint(0,50000,size=len(alpha2_codes))
-    for i in range(0,len(alpha2_codes)):
-        newcases[alpha2_codes[i]["code"]] = int(numbers[i])
-    return JsonResponse(newcases)
+    start_date_str = request.GET.get('start_date')
+    end_date_str   = request.GET.get('end_date')
+    model          = request.GET.get('model')
+
+    this_path = os.path.dirname(__file__)
+    predict_df = pd.read_csv(this_path+'/latest_predictor_run/all_countries_'+model,parse_dates=['Date'],encoding="ISO-8859-1",error_bad_lines=False)
+    end_date = pd.to_datetime(end_date_str,format='%Y-%m-%d')
+
+    obj = pd.json_normalize(alpha2_codes)
+    codes = dict(zip(obj.name,obj.code)) 
+    
+
+    idx = predict_df.groupby(['CountryName'])['Date'].transform(max) == predict_df['Date']
+    last_date_df = predict_df[idx]
+    last_date_df = last_date_df.assign(Code=np.nan)
+    
+    for index,row in last_date_df.iterrows():
+        c = last_date_df.loc[index,"CountryName"]
+        if c in codes:
+            last_date_df.loc[index,"Code"] = codes[c]
+
+    last_date = last_date_df.dropna().set_index('Code').T.to_dict()
+    return JsonResponse(last_date)
+
+
+
 
 def home(request):
     myform = ModelForm()
     year = datetime.datetime.now().year
-    code_match = {}
-    for i in range(0,len(alpha2_codes)):
-        code_match[alpha2_codes[i]['code']] = alpha2_codes[i]['name']
-    myjson = json.dumps(code_match)
-    return render(request,"home.html",{'year':year,'myform':myform,'code_match':SafeString(myjson)})
+    return render(request,"home.html",{'year':year,'myform':myform})
 

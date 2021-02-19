@@ -51,7 +51,7 @@ def make_prediction(geo,rate,K,start_date,end_date,IPS_vector,model_file):
 
 def get_latest_hist(geo):
     this_path = os.path.dirname(__file__)
-    hist_df = pd.read_csv(this_path+'/data/latest_df.csv',parse_dates=['Date'],encoding="ISO-8859-1",dtype={"GeoID": str},error_bad_lines=False)
+    hist_df = pd.read_csv(this_path+'/data/latest_df.csv',parse_dates=['Date'],encoding="ISO-8859-1",dtype={"GeoID": str},error_bad_lines=False).fillna(0)
     hist_df = hist_df[hist_df.GeoID == geo]
     IPS_vector = hist_df[MY_IPS].loc[hist_df.Date.idxmax()].values.tolist()
     latest_hist_date = hist_df.loc[hist_df.Date.idxmax()].at['Date'].date().strftime('%Y-%m-%d')
@@ -103,7 +103,11 @@ class KassandraPredictor:
         last_index = self.hist_df.Date.idxmax()
         self.latest_hist_date = self.hist_df.loc[last_index].at['Date']
         tmp = self.hist_df['NewCases'].iloc[-7:last_index].values
-        self.latest_new_cases = np.mean(tmp[np.nonzero(tmp)])
+        tmp = tmp[np.nonzero(tmp)]
+        if len(tmp) == 0:
+            self.latest_new_cases = 0.0
+        else:
+            self.latest_new_cases = np.mean(tmp)
 
         
     def predict(self,start_date_str,end_date_str,IPS_vector):

@@ -5,11 +5,27 @@
 /* red        #BF3604 */
 /* light red  #BF6E50 */
 
-body  {padding:0px;margin:0px;}
-header {border-bottom:2px solid #0388A6}
-footer {border-top:2px solid #0388A6;margin-top:20px;}
-.header_footer {background-color: #6CBAD9;color:#0388A6;width:100%;margin:0px;overflow:hidden;padding:10px;}
-.header_footer hr {color:#0388A6;background:#0388A6;height:2px;border:none;margin:0px;}
+body  {padding:0px;margin:0px;height:100%;min-height:100vh;position:relative}
+.header_footer {background-color: #6CBAD9;color:#0388A6;width:100%;margin:0px;overflow:hidden;}
+
+header {border-bottom:2px solid #0388A6;padding:10px;}
+
+body::after {
+  content: '';
+  display: block;
+  height: 30px; /* Set same as footer's height */
+}
+footer {position:absolute;height:30px;bottom:0px;padding:5px;border-top:2px solid #0388A6;margin-top:10px;}
+footer a:link {color: #0388A6;}
+footer a:visited {color: #0388A6;}
+footer a:hover {color: #c72289;}
+footer a:active {color: #c72289;}
+footer p {margin:0;text-align:right}
+
+
+
+
+
 
 
 .navbar {border:2px solid #0388A6;background-color:#fcfaf2;border-radius:70px 70px;}
@@ -23,8 +39,14 @@ footer {border-top:2px solid #0388A6;margin-top:20px;}
 
 
 
-.active_tab {border: 2px solid rgb(255, 99, 132);border-radius:10px 10px;}
+a:link {color: #6CBAD9;}
+a:visited {color: #6CBAD9;}
+a:hover {color: #c72289;}
+a:active {color: #c72289;}
 
+
+
+.active_tab {border: 2px solid rgb(255, 99, 132);border-radius:10px 10px;}
 
 h3 {color:#0388A6;text-align:center;margin-top:0px;margin-bottom:10px;}
 

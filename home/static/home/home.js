@@ -1,5 +1,5 @@
 var blues = ["#6ECBD4","#3EC7D4","#028E9B","#01565E"]
-var pinks = ["#E39AC3","#DA5BB2","#C72289","#ED00AE"]
+var pinks = ['#FF8FCE','#F7549E','#FF2589','#FF0059']
 var mycolors = pinks
 
 $(document).ready(function(){
@@ -17,7 +17,7 @@ $(document).ready(function(){
 		    "stroke-width": 0.3
                 },
                 "attrsHover": {
-                    "fill": "#f38a03"
+		    "fill": "#f38a03"
                 }
             }
         },
@@ -80,11 +80,15 @@ function get_new_cases(){
 	success: function(response){
 	    var updatedOptions = {'areas': {}};
 	    for(var key in response){
+		country_name = response[key]['CountryName'],
+		newcases = response[key]['PredictedDailyNewCases'],
+		quant25  = response[key]['PredictedDailyQuantile25'],
+		quant75  = response[key]['PredictedDailyQuantile75'],
 		updatedOptions.areas[key] = {
-		    value: response[key],
-		    href: '/predict/?country='+code_match[key]+'&start_date=2021-05-01&end_date=2021-05-20&model_field='+$('#id_model').val(),
+		    value: newcases,
+		    href: '/predict/?country='+country_name+'&start_date='+$('#id_start_date').val()+'&end_date='+$('#id_end_date').val()+'&model_field='+$('#id_model').val(),
 		    tooltip:{
-			content: '<table><tr><td colspan="2" style="font-weight:bold;text-align:center">'+key+'</td></tr><tr><td>New Cases:</td><td>'+response[key]+'</td></tr></table>',
+			content: '<table><tr><td colspan="2" style="font-weight:bold;text-align:center">'+country_name+'</td></tr><tr><td>New Cases:</td><td>'+newcases+'</td></tr><tr><td>Uncertainty:</td><td>'+quant25+'-'+quant75+'</td></tr></table>',
 		    }
 		}
 	    }
