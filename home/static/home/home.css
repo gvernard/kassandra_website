@@ -6,7 +6,8 @@ h3 {margin: 40px auto;}
 
 .mapcontainer {
     margin: 0px auto 40px auto;
-    width:1200px;
+    height:400px;
+    visibility:hidden;
 }
 
 .map_layout td{

@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 import datetime
+import json
+from django.utils.safestring import SafeString
 import numpy as np
 from .forms import ModelForm
 
@@ -265,5 +267,9 @@ def get_global_new_cases(request):
 def home(request):
     myform = ModelForm()
     year = datetime.datetime.now().year
-    return render(request,"home.html",{'year':year,'myform':myform})
+    code_match = {}
+    for i in range(0,len(alpha2_codes)):
+        code_match[alpha2_codes[i]['code']] = alpha2_codes[i]['name']
+    myjson = json.dumps(code_match)
+    return render(request,"home.html",{'year':year,'myform':myform,'code_match':SafeString(myjson)})
 

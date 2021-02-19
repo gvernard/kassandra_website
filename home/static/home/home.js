@@ -13,7 +13,8 @@ $(document).ready(function(){
 	    "defaultArea": {
                 "attrs": {
                     "fill": "#6cbad9",
-                    "stroke": "#0388A6"
+                    "stroke": "#0388A6",
+		    "stroke-width": 0.3
                 },
                 "attrsHover": {
                     "fill": "#f38a03"
@@ -61,7 +62,6 @@ $(document).ready(function(){
 	}
     });
 
-    
     $('#id_model').on("change",function(){
 	get_new_cases();
     });
@@ -82,13 +82,19 @@ function get_new_cases(){
 	    for(var key in response){
 		updatedOptions.areas[key] = {
 		    value: response[key],
-		    tooltip: {
-			content: '<span style="color:blue"> '+response[key]+'</span>'
+		    href: '/predict/?country='+code_match[key]+'&start_date=2021-05-01&end_date=2021-05-20&model_field='+$('#id_model').val(),
+		    tooltip:{
+			content: '<table><tr><td colspan="2" style="font-weight:bold;text-align:center">'+key+'</td></tr><tr><td>New Cases:</td><td>'+response[key]+'</td></tr></table>',
 		    }
 		}
 	    }
 	    var options = [{mapOptions: updatedOptions,animDuration: 1000}];
-	    $(".mapcontainer").trigger('update',options)   
+	    $(".mapcontainer").trigger('update',options)
+
+	    if( $(".mapcontainer").css("visibility") === 'hidden' ){
+		$(".mapcontainer").css('visibility','visible').hide().fadeIn();
+	    }
+
 	}
     });
 
