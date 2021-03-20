@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'prescribe',
     'about',
     'home',
+    'nausicookie',
 ]
 
 MIDDLEWARE = [

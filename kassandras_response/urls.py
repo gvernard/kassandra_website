@@ -24,4 +24,5 @@ urlpatterns = [
     path('home/',include('home.urls')),
     path('prescribe/',include('prescribe.urls')),
     path('about/',include('about.urls')),
+    path('nausicookie/',include('nausicookie.urls')),
 ]

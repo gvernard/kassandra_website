@@ -1,0 +1,39 @@
+{% load static %}
+
+<html>
+  <head>
+    <title>Nausicookie's birthday</title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script type="text/javascript" src="{% static 'nausicookie/nausicookie.js' %}"></script>
+
+    
+    <style>
+      #title {margin:20px auto;width:200px;text-align:center;}
+      #sortable_div {position:relative;width: 600px;height: 800px;border: 1px solid black;margin: 0px auto;padding:0px;}
+      #sortable {list-style-type: none;padding: 0px;margin:0px;}
+      #sortable li {float:left;}
+      #true_img {display:none;width:600px;height:800px;}
+      #prize_img {position:absolute;left:0px;top:0px;z-index:1;display:none;}
+      .piece {width:100px;height:100px;}
+    </style>
+  </head>
+  
+  <body style="cursor: auto;">
+    <div id="title"><h2>22/03/2021<h2></div>
+
+    <div id="sortable_div">
+      <img id="true_img" src="{% static 'nausicookie/cutiez.jpg' %}">
+      <img id="prize_img" src="{% static 'nausicookie/prize_img.jpg' %}">
+      <ul id="sortable" class="ui-sortable">
+	{% for item in indices %}
+	{% with 'nausicookie/'|add:item.1 as image_static %}
+	<li class="ui-state-default piece" id="recordArr_{{item.0}}"><img src="{% static image_static %}"></li>
+	{% endwith %}
+	{% endfor %}
+      </ul>
+    </div>
+    
+  </body>
+
+</html>
